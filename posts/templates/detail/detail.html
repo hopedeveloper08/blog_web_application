@@ -10,5 +10,8 @@
             <em>Published at {{ post.published_at }} by {{ post.author }}</em>
         </p>
         <blockquote class="blockquote">{{ post.content|linebreaks }}</blockquote>
+        <a href="{% url 'posts:post_share' post.id %}" class="btn btn-primary">
+            Share this post
+        </a>
     </div>
 {% endblock %}

@@ -6,9 +6,9 @@
 {% block body %}
     <div class="container mt-3">
 
-        {% include "post_list_main.html" with posts=posts %}
+        {% include "list/main.html" with posts=posts %}
 
-        {% include "pagination.html" with page=page_obj %}
+        {% include "list/pagination.html" with page=page_obj %}
 
     </div>
 {% endblock %}
