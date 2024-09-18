@@ -5,6 +5,7 @@
 
 {% block body %}
     <div class="container mt-3">
+
         <main class="col-9">
             {% block main %}
                 {% for post in posts %}
@@ -17,15 +18,19 @@
                         <p class="blockquote-footer mt-1">
                             <em>Published at {{ post.published_at }} by {{ post.author }}</em>
                         </p>
-                        <blockquote class="blockquote">{{ post.content|truncatewords:20|linebreaks }}</blockquote>
-                        </div>
-                        <hr />
-                    {% endfor %}
-                {% endblock %}
+                        <blockquote class="blockquote">{{ post.content|truncatewords:30|linebreaks }}</blockquote>
+                    </div>
+                    <hr />
+                {% endfor %}
+            {% endblock %}
         </main>
+
         <aside class="col-3">
             {% block sidebar %}
             {% endblock %}
         </aside>
+
+        {% include "pagination.html" with page=posts %}
+
     </div>
 {% endblock %}

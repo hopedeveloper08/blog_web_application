@@ -1,19 +1,30 @@
 from django.shortcuts import get_object_or_404
 from django.views import generic
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from posts.models import Post
 
 
-class PostListView(generic.ListView):
-    model = Post
-    context_object_name = 'posts'
-    queryset = Post.published.all()
+class PostListView(generic.TemplateView):
     template_name = 'post_list.html'
 
+    def get_context_data(self, **kwargs):
+        posts = Post.published.all()
+        paginator = Paginator(posts, 3)
+        page = self.request.GET.get('page')
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+        return {
+            'posts': posts,
+            'page': page,
+        }
 
-class PostDetailView(generic.DetailView):
-    model = Post
-    context_object_name = 'post'
+
+class PostDetailView(generic.TemplateView):
     template_name = 'post_detail.html'
 
     def get_context_data(self, **kwargs):
