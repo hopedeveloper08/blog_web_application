@@ -1,17 +1,31 @@
-{% extends 'post_base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}post list{% endblock %}
 
-{% block main %}
-    {% for post in posts %}
-        <h2>
-            <a href="{{ post.get_absolute_url }}">
-                {{ post.title }}
-            </a>
-        </h2>
-        <p>
-            Published at {{ post.published_at }} by {{ post.author }}
-        </p>
-        <p>{{ post.content|truncatewords:30|linebreaks }}</p>
-    {% endfor %}
+
+{% block body %}
+    <div class="container mt-3">
+        <main class="col-9">
+            {% block main %}
+                {% for post in posts %}
+                    <div>
+                        <h2>
+                            <a href="{{ post.get_absolute_url }}" class="text-decoration-none">
+                                {{ post.title }}
+                            </a>
+                        </h2>
+                        <p class="blockquote-footer mt-1">
+                            <em>Published at {{ post.published_at }} by {{ post.author }}</em>
+                        </p>
+                        <blockquote class="blockquote">{{ post.content|truncatewords:20|linebreaks }}</blockquote>
+                        </div>
+                        <hr />
+                    {% endfor %}
+                {% endblock %}
+        </main>
+        <aside class="col-3">
+            {% block sidebar %}
+            {% endblock %}
+        </aside>
+    </div>
 {% endblock %}
