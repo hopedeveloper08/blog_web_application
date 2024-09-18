@@ -3,6 +3,11 @@ from django.db import models
 from django.utils import timezone
 
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(is_published=True)
+
+
 class Post(models.Model):
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256, unique_for_date='published_at')
@@ -12,6 +17,9 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     published_at = models.DateTimeField(default=timezone.now)
     is_published = models.BooleanField(default=False)
+
+    objects = models.Manager()
+    published = PublishedManager()
 
     class Meta:
         ordering = ('-published_at',)
