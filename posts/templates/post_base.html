@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+    <div class="container mt-3">
+        <main>
+            {% block main %}
+            {% endblock %}
+        </main>
+        <aside>
+            {% block sidebar %}
+            {% endblock %}
+        </aside>
+    </div>
+{% endblock %}
