@@ -6,31 +6,9 @@
 {% block body %}
     <div class="container mt-3">
 
-        <main class="col-9">
-            {% block main %}
-                {% for post in posts %}
-                    <div>
-                        <h2>
-                            <a href="{{ post.get_absolute_url }}" class="text-decoration-none">
-                                {{ post.title }}
-                            </a>
-                        </h2>
-                        <p class="blockquote-footer mt-1">
-                            <em>Published at {{ post.published_at }} by {{ post.author }}</em>
-                        </p>
-                        <blockquote class="blockquote">{{ post.content|truncatewords:30|linebreaks }}</blockquote>
-                    </div>
-                    <hr />
-                {% endfor %}
-            {% endblock %}
-        </main>
+        {% include "post_list_main.html" with posts=posts %}
 
-        <aside class="col-3">
-            {% block sidebar %}
-            {% endblock %}
-        </aside>
-
-        {% include "pagination.html" with page=posts %}
+        {% include "pagination.html" with page=page_obj %}
 
     </div>
 {% endblock %}
