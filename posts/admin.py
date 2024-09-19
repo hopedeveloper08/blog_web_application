@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from posts.models import Post
+from posts.models import Post, Comment
 
 
 @admin.register(Post)
@@ -18,3 +18,9 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = 'published_at'
     prepopulated_fields = {'slug': ('title',)}
     raw_id_fields = ('author',)
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'post')
+    list_filter = ('created_at', 'updated_at')

@@ -4,14 +4,11 @@
 
 
 {% block body %}
-    <div class="container mt-3">
-        <h1>{{ post.title }}</h1>
-        <p class="blockquote-footer mt-1">
-            <em>Published at {{ post.published_at }} by {{ post.author }}</em>
-        </p>
-        <blockquote class="blockquote">{{ post.content|linebreaks }}</blockquote>
-        <a href="{% url 'posts:post_share' post.id %}" class="btn btn-primary">
-            Share this post
-        </a>
+    <div class="container">
+
+        {% include 'detail/post_detail.html' with post=post %}
+
+        {% include 'detail/comment.html' with comments=comments form=form %}
+
     </div>
 {% endblock %}

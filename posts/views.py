@@ -1,10 +1,9 @@
-from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.contrib import messages
 from django.urls import reverse
 
 from posts.models import Post
-from posts.forms import EmailPostForm
+from posts.forms import EmailPostForm, CommentForm
 
 
 class PostListView(generic.ListView):
@@ -14,10 +13,38 @@ class PostListView(generic.ListView):
     template_name = 'list/list.html'
 
 
-class PostDetailView(generic.DetailView):
+class PostDetailView(generic.DetailView, generic.FormView):
     queryset = Post.published.all()
     context_object_name = 'post'
     template_name = 'detail/detail.html'
+    form_class = CommentForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        post = self.get_object()
+        comments = post.comments.all()
+
+        context['comments'] = comments
+        return context
+
+    def form_valid(self, form):
+        try:
+            slug = self.kwargs['slug']
+            comment = form.save(commit=False)
+            comment.post = Post.objects.get(slug=slug)
+            comment.save()
+            messages.success(self.request, 'Comment create successfully')
+        except:
+            messages.error(self.request, 'There was an error to create comment')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Input was invalid')
+        return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse('posts:post_detail', kwargs=self.kwargs)
 
 
 class PostShareView(generic.FormView):
@@ -28,14 +55,13 @@ class PostShareView(generic.FormView):
         try:
             form.send_email(self.request, self.kwargs['post_id'])
             messages.success(self.request, 'Email sent successfully')
-        except Exception as e:
-            print(e)
+        except:
             messages.error(self.request, 'There was an error sending the email')
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.error(self.request, 'There was an error sending the email')
+        messages.error(self.request, 'Input was invalid')
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse('posts:post_share', kwargs={'post_id': self.kwargs['post_id']})
+        return reverse('posts:post_share', kwargs=self.kwargs)

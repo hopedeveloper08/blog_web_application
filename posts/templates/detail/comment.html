@@ -1,0 +1,38 @@
+<h2>Comments</h2>
+<ul class="list-group">
+
+    {% for comment in comments %}
+
+        <li class="list-group-item">
+
+            <strong>{{ forloop.counter }}. {{ comment.name }} ({{ comment.email }})</strong>:
+
+            <p>{{ comment.content }}</p>
+
+            <small>{{ comment.created_at }}</small>
+
+        </li>
+
+    {% empty %}
+
+        <li class="list-group-item">No comments yet.</li>
+
+    {% endfor %}
+
+</ul>
+
+<br />
+
+{% include 'detail/message.html' with messages=messages %}
+
+<br />
+
+<h1>New comment</h1>
+
+<hr />
+
+<form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input class="btn btn-primary" type="submit" value="Send">
+</form>

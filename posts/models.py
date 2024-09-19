@@ -38,3 +38,18 @@ class Post(models.Model):
                 self.slug,
             ]
         )
+
+
+class Comment(models.Model):
+    name = models.CharField(max_length=64)
+    email = models.EmailField()
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ('created_at',)
+
+    def __str__(self):
+        return f'Comment by {self.name} on {self.post}'

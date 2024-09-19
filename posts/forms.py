@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 
-from posts.models import Post
+from posts.models import Post, Comment
 
 
 class EmailPostForm(forms.Form):
@@ -23,3 +23,15 @@ class EmailPostForm(forms.Form):
             self.cleaned_data["email"],
             (self.cleaned_data['to'],),
         )
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('name', 'email', 'content')
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control'}),
+        }
