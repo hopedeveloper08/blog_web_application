@@ -4,8 +4,13 @@
     <em>Published at {{ post.published_at }} by {{ post.author }}</em>
 </p>
 
-<blockquote class="blockquote">{{ post.content|linebreaks }}</blockquote>
-
 <a href="{% url 'posts:post_share' post.id %}" class="btn btn-primary mb-5">
     Share this post
 </a>
+
+<blockquote class="blockquote">{{ post.content|linebreaks }}</blockquote>
+
+<span class="h4">Tags:</span>
+{% for tag in post.tags.all %}
+    <span class="badge text-bg-secondary">{{ tag }}</span>
+{% endfor %}
