@@ -1,16 +1,28 @@
+from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.contrib import messages
 from django.urls import reverse
+
+from taggit.models import Tag
 
 from posts.models import Post
 from posts.forms import EmailPostForm, CommentForm
 
 
 class PostListView(generic.ListView):
-    queryset = Post.published.all()
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'list/list.html'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+
+        if not tag_slug:
+            return Post.published.all()
+
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = Post.published.filter(tags__in=[tag])
+        return object_list
 
 
 class PostDetailView(generic.DetailView, generic.FormView):
