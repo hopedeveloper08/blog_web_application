@@ -15,10 +15,7 @@
 
                 <blockquote class="blockquote">{{ post.content|truncatewords:30|linebreaks }}</blockquote>
 
-                <span class="h4">Tags:</span>
-                {% for tag in post.tags.all %}
-                    <a href="{% url 'posts:post_list_by_tag' tag.slug %}"><span class="badge text-bg-secondary">{{ tag }}</span></a>
-                {% endfor %}
+                {% include 'detail/tag.html' with post=post %}
 
             </div>
 

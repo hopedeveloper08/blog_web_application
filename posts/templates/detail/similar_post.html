@@ -1,0 +1,17 @@
+<h2>
+    Similar posts
+</h2>
+
+{% for post in similar_post %}
+
+    <p>
+        <a href="{{ post.get_absolute_url }}" class="text-decoration-none">
+            {{ post.title }}
+        </a>
+    </p>
+
+    {% empty %}
+
+        There are no similar posts yet.
+
+{% endfor %}

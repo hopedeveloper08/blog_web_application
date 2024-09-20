@@ -8,6 +8,8 @@
 
         {% include 'detail/post_detail.html' with post=post %}
 
+        {% include 'detail/similar_post.html' with similar_post=similar_post %}
+
         {% include 'detail/comment.html' with comments=comments form=form %}
 
     </div>

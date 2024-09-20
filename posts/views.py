@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.contrib import messages
@@ -35,9 +36,19 @@ class PostDetailView(generic.DetailView, generic.FormView):
         context = super().get_context_data(**kwargs)
 
         post = self.get_object()
-        comments = post.comments.all()
 
+        comments = post.comments.all()
         context['comments'] = comments
+
+        post_tags_ids = post.tags.values_list('id', flat=True)
+        similar_post= Post.published \
+            .filter(tags__in=post_tags_ids) \
+            .distinct() \
+            .exclude(id=post.id)
+        similar_post = similar_post.annotate(same_tags=Count('tags')) \
+            .order_by('-same_tags', '-published_at')[:4]
+        context['similar_post'] = similar_post
+
         return context
 
     def form_valid(self, form):
