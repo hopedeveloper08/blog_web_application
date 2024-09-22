@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load posts_tags %}
 
 {% block title %}post list{% endblock %}
 
@@ -6,7 +7,15 @@
 {% block body %}
     <div class="container mt-3">
 
-        {% include "list/main.html" with posts=posts %}
+        <div class="row">
+
+            {% include "list/main.html" with posts=posts %}
+
+            <aside class="col-3">
+                {% show_latest_posts %}
+            </aside>
+
+        </div>
 
         {% include "list/pagination.html" with page=page_obj %}
 

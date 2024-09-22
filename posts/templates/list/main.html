@@ -1,25 +1,25 @@
 <main class="col-9">
-        {% for post in posts %}
+    {% for post in posts %}
 
-            <div>
+        <div>
 
-                <h2>
-                    <a href="{{ post.get_absolute_url }}" class="text-decoration-none">
-                        {{ post.title }}
-                    </a>
-                </h2>
+            <h2>
+                <a href="{{ post.get_absolute_url }}" class="text-decoration-none">
+                    {{ post.title }}
+                </a>
+            </h2>
 
-                <p class="blockquote-footer mt-1">
-                    <em>Published at {{ post.published_at }} by {{ post.author }}</em>
-                </p>
+            <p class="blockquote-footer mt-1">
+                <em>Published at {{ post.published_at }} by {{ post.author }}</em>
+            </p>
 
-                <blockquote class="blockquote">{{ post.content|truncatewords:30|linebreaks }}</blockquote>
+            <blockquote class="blockquote">{{ post.content|truncatewords:30|linebreaks }}</blockquote>
 
-                {% include 'detail/tag.html' with post=post %}
+            {% include 'general_post/tag.html' with post=post %}
 
-            </div>
+        </div>
 
-            <hr />
+        <hr />
 
-        {% endfor %}
+    {% endfor %}
 </main>
