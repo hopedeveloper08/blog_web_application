@@ -9,7 +9,9 @@
 
         <div class="row">
 
-            {% include "list/main.html" with posts=posts %}
+            <main class="col-9">
+                {% include "list/main.html" with posts=posts %}
+            </main>
 
             <aside class="col-3">
                 {% show_latest_posts %}

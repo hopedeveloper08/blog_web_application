@@ -1,10 +1,14 @@
+{% load posts_tags %}
+
 <h1>{{ post.title }}</h1>
 
 <p class="blockquote-footer mt-1">
     <em>Published at {{ post.published_at }} by {{ post.author }}</em>
 </p>
 
-<blockquote class="blockquote">{{ post.content|linebreaks }}</blockquote>
+<p>
+    {{ post.content|markdown }}
+</p>
 
 {% include 'general_post/tag.html' with post=post %}
 
