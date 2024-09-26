@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME', 'blog'),
-        'USER': os.getenv('DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'omid'),
-        'HOST': os.getenv('HOST', 'localhost'),
-        'PORT': os.getenv('PORT', '5432'),
+        'NAME': 'your-database-name',
+        'USER': 'your-database-user',
+        'PASSWORD': 'your-database-password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
