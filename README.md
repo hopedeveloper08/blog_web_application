@@ -29,13 +29,13 @@ Follow the steps below to install and run the project locally:
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/django-blog-project.git
+    git clone https://github.com/hopedeveloper08/blog_web_application.git
     ```
 
 2. **Navigate to the project directory:**
 
     ```bash
-    cd django-blog-project
+    cd blog_web_application
     ```
 
 3. **Create a virtual environment:**
